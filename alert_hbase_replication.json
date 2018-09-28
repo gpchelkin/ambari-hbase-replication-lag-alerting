@@ -15,14 +15,14 @@
       {
         "name": "max_log_queue",
         "display_name": "Maximum log queue length",
-        "value": "1000",
+        "value": "10",
         "type": "STRING",
         "description": "Maximum length of the HBase replication log queue in WALs"
       },
       {
         "name": "max_replication_lag",
         "display_name": "Maximum replication lag",
-        "value": "1000",
+        "value": "600000",
         "type": "STRING",
         "description": "Maximum value of the HBase replication lag in ms"
       }]

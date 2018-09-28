@@ -1,6 +1,6 @@
 # Ambari HBase Replication Lag Alerting
 
-Ambari Alerts triggered from the HBase replication status: this alert is triggered if Hbase replication is lagging or failing
+Ambari Alerts triggered from the HBase replication status: this alert is triggered if HBase replication is lagging or failing
 
 Works in both Kerberised and non-Kerberised environments.
 
@@ -10,25 +10,8 @@ The alert parses the HBase shell `status 'replication'` command output and alert
 
 The alert takes two parameters for configuration:
 
-1. Maximum length of the HBase replication log.
-2. Maximum size of the HBase replication lag.
-
-```javascript
-      {
-        "name": "max_log_queue",
-        "display_name": "Maximum log length",
-        "value": "1000",
-        "type": "STRING",
-        "description": "Maximum length of the HBase replication log"
-      },
-      {
-        "name": "max_replication_lag",
-        "display_name": "Maximum replication lag",
-        "value": "1000",
-        "type": "STRING",
-        "description": "Maximum size of the HBase replication lag"
-      }
-```
+1. Maximum length of the HBase replication log queue in WALs.
+2. Maximum value of the HBase replication lag in ms.
 
 ## Alert installation
 
@@ -37,7 +20,7 @@ The alert takes two parameters for configuration:
 Push the new alert via Ambari REST API.
 
 ```sh
-curl -u admin:admin -i -H 'X-Requested-By: ambari' -X POST -d @alerts.json http://ambari.cloudapp.net:8080/api/v1/clusters/hdptest/alert_definitions
+curl -u admin:admin -i -H 'X-Requested-By: ambari' -X POST -d @alert_hbase_replication.json http://ambari.cloudapp.net:8080/api/v1/clusters/hdptest/alert_definitions
 ```
 You will also need to copy the python script in /var/lib/ambari-server/resources/host_scripts and restart the ambari-server. After restart the script will be pushed in /var/lib/ambari-agent/cache/host_scripts on the different hosts.
 

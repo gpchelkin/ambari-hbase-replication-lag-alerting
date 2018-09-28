@@ -104,12 +104,14 @@ def execute(configurations={}, parameters={}, host_name=None):
     output = run_command(command)
 
     # Parse output with regex
-    exp = '^\s*([a-zA-Z0-9.]+):\s*$[\n\r]+^\s*SOURCE:.*PeerID=([0-9]+).*SizeOfLogQueue=([0-9]+).*TimeStampsOfLastShippedOp=([^,]+).*Replication Lag=([0-9]+)$'
+    exp = '^\s*([a-zA-Z0-9.-]+):\s*$[\n\r]+^\s*SOURCE:.*PeerID=([a-zA-Z0-9.-]+).*SizeOfLogQueue=([0-9]+).*TimeStampsOfLastShippedOp=([^,]+).*Replication Lag=([0-9]+)$'
     regions = re.findall(exp,output,re.MULTILINE)
 
     # For each region server, check if there are any breaches
     breached = list()
     okay = list()
+    if not regions:
+        raise Exception('Could not parse output of hbase shell')
     for region in regions:
       if int(region[2])>int(max_log_queue):
         breached.append('Region server %s has breached SizeOfLogQueue limit of %s. Has values of: PeerID=%s SizeOfLogQueue=%s TimeStampsOfLastShippedOp=%s Replication Lag=%s' % (region[0],str(max_log_queue),region[1],region[2],region[3],region[4]))

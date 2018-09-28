@@ -3,7 +3,7 @@
     "service_name": "HBASE",
     "component_name": "HBASE_MASTER",
     "name": "hbase_replication_alerting",
-    "label": "HBase Replication Alerting",
+    "label": "HBase Replication",
     "description": "This alert is triggered if HBase replication is lagging or failing.",
     "interval": 5,
     "scope": "SERVICE",
